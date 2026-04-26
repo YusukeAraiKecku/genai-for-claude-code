@@ -21,7 +21,7 @@
 
 ### D-004: clean-room 運用ルール
 
-**決定**: `../genai-ai-api-main/` `../genai-web-main/` は実装中に絶対に開かない。仕様書 `../gennai_for_claude_code_spec/` のみ参照。
+**決定**: `../genai-ai-api-main/` `../genai-web-main/` は実装中に絶対に開かない。仕様書 `../genai_for_claude_code_spec/` のみ参照。
 **理由**: clean-room 違反を構造的に防ぐ。
 
 ### D-005: v0.1 + v0.2 を 1 リリースにまとめる

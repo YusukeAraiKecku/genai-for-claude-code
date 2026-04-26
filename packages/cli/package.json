@@ -1,19 +1,19 @@
 {
-  "name": "@gennai/cli",
-  "version": "0.1.0-pre",
-  "private": true,
+  "name": "@genai/cli",
+  "version": "0.1.0",
+  "private": false,
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.js",
   "bin": {
-    "gennai": "./dist/index.js"
+    "genai": "./dist/index.js"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
     "build": "tsc -p tsconfig.json && chmod +x dist/index.js"
   },
   "dependencies": {
-    "@gennai/core": "0.1.0-pre",
+    "@genai/core": "0.1.0",
     "commander": "^13.0.0",
     "kleur": "^4.1.5"
   },

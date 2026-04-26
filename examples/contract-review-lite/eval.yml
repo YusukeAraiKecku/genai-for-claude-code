@@ -1,0 +1,14 @@
+skill: contract-review-lite
+version: 0.1.0
+cases:
+  - id: saas-nda-basic
+    fixture: tests/fixtures/saas-nda.input.md
+    must_include:
+      - "## リスク条項"
+      - "## 確認すべき点"
+    must_not_include:
+      - "法的アドバイス"
+      - "弁護士に相談せずに"
+    artifacts:
+      - name: risk-checklist
+        path: risk-checklist.md

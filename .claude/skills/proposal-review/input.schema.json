@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "proposal"
+  ],
+  "properties": {
+    "proposal": {
+      "title": "提案内容",
+      "description": "レビュー対象の提案書・企画書の本文をMarkdownで貼り付けてください。",
+      "type": "string",
+      "minLength": 50
+    },
+    "context": {
+      "title": "背景・目的",
+      "description": "この提案がどんな課題を解決しようとしているかを補足してください（任意）。",
+      "type": "string"
+    },
+    "review_focus": {
+      "title": "レビュー重点",
+      "description": "特に重点を置くレビュー観点を選んでください。",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

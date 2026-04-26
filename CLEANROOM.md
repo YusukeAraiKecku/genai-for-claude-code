@@ -1,6 +1,6 @@
 # Clean-room Statement
 
-Gennai for Claude Code is a clean-room, local-first reimplementation of the *general idea* of declarative AI app registration for Claude Code Skills.
+Genai for Claude Code is a clean-room, local-first reimplementation of the *general idea* of declarative AI app registration for Claude Code Skills.
 
 It does not copy source code, UI, design assets, deployment templates, screenshots, or government-specific wording from any other GenAI repository.
 
@@ -28,13 +28,13 @@ It does not copy source code, UI, design assets, deployment templates, screensho
 
 ## What we implement independently
 
-- Gennai Recipe schema (`gennai.recipe.yml`)
+- Genai Recipe schema (`genai.recipe.yml`)
 - Skill Compiler pipeline
 - Claude Code Skill templates (SKILL.md generator)
 - Hook-based safety validation
 - Subagent orchestration
 - Three-layer evaluation (static / contract / qualitative)
-- CLI (`gennai init / new / compile / validate / test / doctor`)
+- CLI (`genai init / new / compile / validate / test / doctor`)
 - Plugin marketplace packaging
 
 ## Contributor checklist

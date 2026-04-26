@@ -4,7 +4,7 @@
 
 ## Phase 0: Bootstrap (完了)
 
-- フォルダリネーム: `genai for claude code` → `gennai-for-claude-code`
+- フォルダリネーム: `genai for claude code` → `genai-for-claude-code`
 - ガバナンス: `CLAUDE.md` / `AGENTS.md` / `scripts/verify.sh` / `tasks/`
 - ライセンス: MIT
 - 公開ドキュメント: `README.md` / `README.ja.md` / `CLEANROOM.md` / `SECURITY.md` / `CONTRIBUTING.md` / `CHANGELOG.md`
@@ -14,7 +14,7 @@
 
 順序:
 
-1. `schemas/gennai.recipe.schema.json` (JSON Schema draft 2020-12)
+1. `schemas/genai.recipe.schema.json` (JSON Schema draft 2020-12)
 2. `packages/core/`:
    - `loadRecipe.ts` (YAML 読み込み + AJV 検証)
    - `normalizeRecipe.ts` (id kebab-case、execution mode 推定、tags 補完)
@@ -28,7 +28,7 @@
    - `commands/init.ts` `commands/new.ts` `commands/compile.ts` `commands/validate.ts` `commands/doctor.ts`
    - エントリ `src/index.ts` (commander)
 5. `examples/proposal-review/`:
-   - `gennai.recipe.yml` (spec のサンプルから)
+   - `genai.recipe.yml` (spec のサンプルから)
    - `references/{review-rubric,risk-checklist}.md`
    - `templates/{review-output,action-items}.md`
    - `tests/fixtures/sample.input.md`
@@ -45,14 +45,14 @@
    - `qualitative.ts` — must_include / must_not_include / 構造一致 (LLM 採点なし)
 3. `packages/cli/commands/test.ts` (eval.yml ドリブン)
 4. `examples/contract-review-lite/` と `examples/meeting-to-actions/`
-5. `.claude/skills/{gennai-new,gennai-compile,gennai-validate}/SKILL.md`
-6. `.claude/agents/{gennai-architect,gennai-security-reviewer}.md`
+5. `.claude/skills/{genai-new,genai-compile,genai-validate}/SKILL.md`
+6. `.claude/agents/{genai-architect,genai-security-reviewer}.md`
 
 ## 検証
 
 `bash scripts/verify.sh` で:
 
 - npm typecheck / lint / build pass
-- `gennai compile` を 3 example に対して exit 0
-- `gennai validate` を生成物に対して exit 0
-- `gennai test` を 3 example の fixture に対して exit 0
+- `genai compile` を 3 example に対して exit 0
+- `genai validate` を生成物に対して exit 0
+- `genai test` を 3 example の fixture に対して exit 0

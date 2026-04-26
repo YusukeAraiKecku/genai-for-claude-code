@@ -1,0 +1,73 @@
+id: contract-review-lite
+name: Contract Review Lite
+version: 0.1.0
+description: 契約書・利用規約を読み込み、リスク条項・不利な条件・確認すべき点を一覧化するスキル。法的アドバイスではなくチェックリストとして使用する。
+tags:
+  - review
+  - contract
+  - legal-lite
+origin:
+  type: original
+  source_code_copied: false
+execution:
+  default_mode: local-file
+  allowed_modes:
+    - local-file
+    - claude-local
+  remote_api_required: false
+inputs:
+  contract_file:
+    type: file
+    title: 契約書ファイル
+    description: レビュー対象の契約書（.md / .txt / .pdf テキスト抽出済み）のパスを指定してください。
+    required: true
+  contract_type:
+    type: select
+    title: 契約種別
+    description: 契約書の種類を選んでください。
+    required: false
+    options:
+      - saas-subscription
+      - nda
+      - employment
+      - vendor
+      - other
+  party_role:
+    type: select
+    title: 自社の立場
+    description: この契約における自社の役割を選んでください。
+    required: false
+    options:
+      - buyer
+      - seller
+      - both
+local_context:
+  references:
+    - path: references/common-risk-clauses.md
+      description: よくある問題条項のパターン集
+  templates: []
+outputs:
+  primary: markdown
+  artifacts:
+    - name: risk-checklist
+      path: risk-checklist.md
+      format: markdown
+quality:
+  rules:
+    - separate_facts_assumptions_opinions
+    - list_open_questions
+  eval:
+    fixture_dir: ./tests/fixtures
+    golden_dir: ./tests/golden
+security:
+  network: deny-by-default
+  secrets: forbid-hardcoded
+  side_effects: read-only-by-default
+  allowed_tools: &a1
+    - Read
+    - Grep
+    - Glob
+claude:
+  skill_name: contract-review-lite
+  auto_invocation: true
+  allowed_tools: *a1

@@ -1,0 +1,16 @@
+skill: proposal-review
+version: 0.1.0
+cases:
+  - id: basic-proposal
+    fixture: tests/fixtures/basic-proposal.input.md
+    must_include:
+      - "## 強み"
+      - "## 懸念点"
+      - "## 改善提案"
+      - "## 未解決の問題"
+    must_not_include:
+      - "TODO"
+      - "[要確認]"
+    artifacts:
+      - name: review-report
+        path: review-report.md

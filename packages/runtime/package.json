@@ -1,6 +1,6 @@
 {
-  "name": "@gennai/runtime",
-  "version": "0.1.0-pre",
+  "name": "@genai/runtime",
+  "version": "0.1.0",
   "private": true,
   "license": "MIT",
   "type": "module",

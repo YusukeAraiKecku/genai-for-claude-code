@@ -1,0 +1,18 @@
+skill: meeting-to-actions
+version: 0.1.0
+cases:
+  - id: sprint-retro
+    fixture: tests/fixtures/sprint-retro.input.md
+    must_include:
+      - "## 決定事項"
+      - "## アクションアイテム"
+    must_not_include:
+      - "TBD"
+      - "未定"
+    artifacts:
+      - name: decisions
+        path: decisions.md
+      - name: actions
+        path: actions.md
+      - name: next-agenda
+        path: next-agenda.md

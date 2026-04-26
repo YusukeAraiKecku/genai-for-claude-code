@@ -20,7 +20,7 @@ Phase 0 (bootstrap) が進行中。governance / license / public docs / verify.s
 - パッケージマネージャ: npm workspaces (pnpm/yarn は使わない)
 - フォーマッタ/Linter: Biome
 - License: MIT
-- リポジトリ名: `gennai-for-claude-code`
+- リポジトリ名: `genai-for-claude-code`
 
 ## オープンな論点
 

@@ -1,6 +1,6 @@
-# Contributing to Gennai for Claude Code
+# Contributing to Genai for Claude Code
 
-Gennai for Claude Code is a local-first harness that converts AI apps into Claude Code Skills. Contributions must preserve that philosophy.
+Genai for Claude Code is a local-first harness that converts AI apps into Claude Code Skills. Contributions must preserve that philosophy.
 
 ## Pull Request checklist
 
@@ -24,7 +24,7 @@ Each example must include:
 ```text
 examples/<skill-id>/
   README.md            ← purpose, inputs, outputs, safety notes
-  gennai.recipe.yml    ← declarative recipe
+  genai.recipe.yml    ← declarative recipe
   references/          ← (optional) rubric / checklist
   templates/           ← (optional) output templates
   tests/fixtures/      ← at least one fixture

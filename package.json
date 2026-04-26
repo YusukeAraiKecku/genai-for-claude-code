@@ -1,16 +1,14 @@
 {
-  "name": "gennai-for-claude-code",
-  "version": "0.1.0-pre",
-  "private": true,
+  "name": "genai-for-claude-code",
+  "version": "0.1.0",
+  "private": false,
   "description": "Turn AI apps into local-first Claude Code Skills.",
   "license": "MIT",
   "type": "module",
   "engines": {
     "node": ">=22.0.0"
   },
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": ["packages/*"],
   "scripts": {
     "typecheck": "npm run typecheck --workspaces --if-present",
     "build": "npm run build --workspaces --if-present",
@@ -21,7 +19,7 @@
     "verify": "bash scripts/verify.sh"
   },
   "bin": {
-    "gennai": "packages/cli/dist/index.js"
+    "genai": "packages/cli/dist/index.js"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.0",

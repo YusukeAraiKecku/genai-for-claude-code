@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "contract_file"
+  ],
+  "properties": {
+    "contract_file": {
+      "title": "契約書ファイル",
+      "description": "file path",
+      "type": "string"
+    },
+    "contract_type": {
+      "title": "契約種別",
+      "description": "契約書の種類を選んでください。",
+      "type": "string"
+    },
+    "party_role": {
+      "title": "自社の立場",
+      "description": "この契約における自社の役割を選んでください。",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

@@ -2,20 +2,20 @@
 
 ## v0.3 (Plugin marketplace)
 
-- `marketplace/plugins/gennai-core/plugin.json`
+- `marketplace/plugins/genai-core/plugin.json`
 - `marketplace.json`
-- `gennai-pack` / `gennai-publish` CLI コマンド
-- 残り 3 self-skills (`gennai-import` / `gennai-security-review` / `gennai-pack`)
-- 残り 4 subagents (`gennai-compiler` / `gennai-evaluator` / `gennai-doc-writer` / `gennai-cleanroom-reviewer`)
+- `genai-pack` / `genai-publish` CLI コマンド
+- 残り 3 self-skills (`genai-import` / `genai-security-review` / `genai-pack`)
+- 残り 4 subagents (`genai-compiler` / `genai-evaluator` / `genai-doc-writer` / `genai-cleanroom-reviewer`)
 
 ## v0.4 (Importers)
 
-- `gennai import --from prompt` (`*.md` / `*.txt` から)
-- `gennai import --from readme`
-- `gennai import --from openapi`
-- `gennai import --from workflow-doc`
-- `gennai import --from script` (Python/TS スクリプトから)
-- `gennai import --from genai-json` (源内風 request format)
+- `genai import --from prompt` (`*.md` / `*.txt` から)
+- `genai import --from readme`
+- `genai import --from openapi`
+- `genai import --from workflow-doc`
+- `genai import --from script` (Python/TS スクリプトから)
+- `genai import --from genai-json` (源内風 request format)
 
 ## v1.0 (Skill catalog)
 

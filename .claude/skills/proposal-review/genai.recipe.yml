@@ -1,0 +1,67 @@
+id: proposal-review
+name: Proposal Review
+version: 0.1.0
+description: 提案書・企画書をレビューし、強み・懸念点・改善提案・未解決問題を構造化して出力するスキル。
+tags:
+  - review
+  - document
+  - proposal
+origin:
+  type: original
+  source_code_copied: false
+execution:
+  default_mode: claude-local
+  allowed_modes:
+    - claude-local
+  remote_api_required: false
+inputs:
+  proposal:
+    type: markdown
+    title: 提案内容
+    description: レビュー対象の提案書・企画書の本文をMarkdownで貼り付けてください。
+    required: true
+    min_length: 50
+  context:
+    type: markdown
+    title: 背景・目的
+    description: この提案がどんな課題を解決しようとしているかを補足してください（任意）。
+    required: false
+  review_focus:
+    type: select
+    title: レビュー重点
+    description: 特に重点を置くレビュー観点を選んでください。
+    required: false
+    options:
+      - feasibility
+      - cost
+      - risk
+      - completeness
+      - clarity
+local_context:
+  references: []
+  templates: []
+outputs:
+  primary: markdown
+  artifacts:
+    - name: review-report
+      path: review-report.md
+      format: markdown
+quality:
+  rules:
+    - separate_facts_assumptions_opinions
+    - list_open_questions
+  eval:
+    fixture_dir: ./tests/fixtures
+    golden_dir: ./tests/golden
+security:
+  network: deny-by-default
+  secrets: forbid-hardcoded
+  side_effects: read-only-by-default
+  allowed_tools: &a1
+    - Read
+    - Grep
+    - Glob
+claude:
+  skill_name: proposal-review
+  auto_invocation: true
+  allowed_tools: *a1

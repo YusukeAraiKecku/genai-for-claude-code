@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "meeting_notes"
+  ],
+  "properties": {
+    "meeting_notes": {
+      "title": "会議メモ",
+      "description": "会議メモや議事録の生テキストをMarkdownで貼り付けてください。",
+      "type": "string",
+      "minLength": 30
+    },
+    "meeting_date": {
+      "title": "会議日時",
+      "description": "会議の日時（例: 2026-04-27 14:00）",
+      "type": "string"
+    },
+    "participants": {
+      "title": "参加者",
+      "description": "参加者名をカンマ区切りで（例: 田中, 鈴木, 山田）",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

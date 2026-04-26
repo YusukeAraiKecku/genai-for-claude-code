@@ -1,6 +1,6 @@
 # Security Policy
 
-Gennai for Claude Code generates Skills that Claude Code will execute. A misconfigured allowed-tools list, a leaked secret, or a destructive Bash command in a published Skill can cause real harm — so the compiler treats security as **part of the build**, not as a follow-up.
+Genai for Claude Code generates Skills that Claude Code will execute. A misconfigured allowed-tools list, a leaked secret, or a destructive Bash command in a published Skill can cause real harm — so the compiler treats security as **part of the build**, not as a follow-up.
 
 ## Defaults
 
@@ -41,7 +41,7 @@ The compiler emits an error if any forbidden pattern appears.
 ## Secret policy
 
 - ❌ `api_key: sk-...` (hardcoded)
-- ✅ `api_key_env: GENNAI_REMOTE_API_KEY` (env reference)
+- ✅ `api_key_env: GENAI_REMOTE_API_KEY` (env reference)
 - Distribute `.env.example` only — never `.env`.
 
 ## Pre-publish checklist

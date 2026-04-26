@@ -1,7 +1,7 @@
 {
-  "name": "@gennai/core",
-  "version": "0.1.0-pre",
-  "private": true,
+  "name": "@genai/core",
+  "version": "0.1.0",
+  "private": false,
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.js",

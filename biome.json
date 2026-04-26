@@ -4,8 +4,9 @@
     "ignore": [
       "**/dist/**",
       "**/node_modules/**",
-      "**/.gennai/**",
-      "examples/**/tests/**"
+      "**/.genai/**",
+      "examples/**/tests/**",
+      ".claude/skills/*/input.schema.json"
     ]
   },
   "formatter": {

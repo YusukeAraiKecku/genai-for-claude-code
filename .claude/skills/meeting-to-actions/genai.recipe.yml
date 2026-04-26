@@ -1,0 +1,70 @@
+id: meeting-to-actions
+name: Meeting to Actions
+version: 0.1.0
+description: 会議メモ・議事録を入力として、決定事項・アクションアイテム・次回アジェンダを構造化して3つのMarkdownファイルとして出力するスキル。
+tags:
+  - meeting
+  - productivity
+  - actions
+origin:
+  type: original
+  source_code_copied: false
+execution:
+  default_mode: claude-local
+  allowed_modes:
+    - claude-local
+    - local-file
+  remote_api_required: false
+inputs:
+  meeting_notes:
+    type: markdown
+    title: 会議メモ
+    description: 会議メモや議事録の生テキストをMarkdownで貼り付けてください。
+    required: true
+    min_length: 30
+  meeting_date:
+    type: text
+    title: 会議日時
+    description: "会議の日時（例: 2026-04-27 14:00）"
+    required: false
+  participants:
+    type: text
+    title: 参加者
+    description: "参加者名をカンマ区切りで（例: 田中, 鈴木, 山田）"
+    required: false
+local_context:
+  references: []
+  templates:
+    - path: templates/actions-template.md
+      description: アクションアイテム出力テンプレート
+outputs:
+  primary: markdown
+  artifacts:
+    - name: decisions
+      path: decisions.md
+      format: markdown
+    - name: actions
+      path: actions.md
+      format: markdown
+    - name: next-agenda
+      path: next-agenda.md
+      format: markdown
+quality:
+  rules:
+    - separate_facts_assumptions_opinions
+    - list_open_questions
+  eval:
+    fixture_dir: ./tests/fixtures
+    golden_dir: ./tests/golden
+security:
+  network: deny-by-default
+  secrets: forbid-hardcoded
+  side_effects: read-only-by-default
+  allowed_tools: &a1
+    - Read
+    - Grep
+    - Glob
+claude:
+  skill_name: meeting-to-actions
+  auto_invocation: true
+  allowed_tools: *a1
