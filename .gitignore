@@ -30,9 +30,9 @@ __pycache__/
 *~
 
 # Gennai working state
-.gennai/runs/
-.gennai/working-context.md
-.gennai/cache/
+.genai/runs/
+.genai/working-context.md
+.genai/cache/
 
 # Test / coverage
 coverage/

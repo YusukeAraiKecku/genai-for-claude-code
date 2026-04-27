@@ -7,6 +7,7 @@
 - `genai-pack` / `genai-publish` CLI コマンド
 - 残り 3 self-skills (`genai-import` / `genai-security-review` / `genai-pack`)
 - 残り 4 subagents (`genai-compiler` / `genai-evaluator` / `genai-doc-writer` / `genai-cleanroom-reviewer`)
+- recipe / skill template files for `genai new` (現状はコード内でscaffold生成。v0.3で `templates/` に外部化)
 
 ## v0.4 (Importers)
 
