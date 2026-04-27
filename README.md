@@ -176,7 +176,7 @@ Genai の実行モード優先順位:
 
 | モード | 使う場面 |
 |---|---|
-| `claude-local` | Claude内蔵LLMで完結できる |
+| `claude-local` | Claude Codeが元々持つLLMをそのまま使用（追加APIキー・サービス不要。推論はAnthropicサーバーで実行） |
 | `local-file` | ローカルMarkdown / JSON / YAMLを参照 |
 | `local-script` | 決定的なPython / TS / Shellの補助処理 |
 | `local-rag` | Grep/Globでローカル文書検索（ベクタDBは後フェーズ任意） |

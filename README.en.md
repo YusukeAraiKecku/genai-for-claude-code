@@ -175,7 +175,7 @@ Genai's execution mode hierarchy — from most to least preferred:
 
 | Mode | When to use |
 |---|---|
-| `claude-local` | Claude's own LLM is sufficient |
+| `claude-local` | Uses Claude Code's built-in LLM as-is — no extra API key or service needed (inference runs on Anthropic's servers, not on-device) |
 | `local-file` | Read local Markdown / JSON / YAML |
 | `local-script` | Deterministic Python / TS / shell helpers |
 | `local-rag` | Grep/Glob over local docs (vector DB optional, post-v1.0) |
