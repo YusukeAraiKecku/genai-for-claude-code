@@ -5,25 +5,22 @@
 <h1 align="center">Genai for Claude Code</h1>
 
 <p align="center">
-  <strong>Turn AI apps into local-first Claude Code Skills.</strong><br>
-  AIアプリを「呼び出す」のではなく、Claude Code に「習得」させる。
+  <strong>AIアプリを「呼び出す」のではなく、Claude Code に「習得」させる。</strong>
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/local--first-✓-brightgreen" alt="local-first" />
-  <img src="https://img.shields.io/badge/API%20key-not%20required%20by%20default-blue" alt="no API key" />
-  <img src="https://img.shields.io/badge/clean--room-reimplementation-lightgrey" alt="clean-room" />
+  <img src="https://img.shields.io/badge/APIキー-デフォルト不要-blue" alt="no API key" />
+  <img src="https://img.shields.io/badge/clean--room-再実装-lightgrey" alt="clean-room" />
   <img src="https://img.shields.io/badge/security-deny--by--default-orange" alt="security-first" />
   <img src="https://img.shields.io/badge/license-MIT-green" alt="MIT" />
 </p>
 
 ---
 
-Genai for Claude Code is a **local-first compiler** that converts AI app workflows, business forms, prompts, local RAG procedures, and (optional) REST APIs into reusable **Claude Code Skills** — without copying code, UI, or design from any external repository.
+Genai for Claude Code は、AIアプリ、業務フォーム、プロンプト、ローカルRAG手順、必要に応じた外部APIを、Claude Code で再利用可能な **Skill** に変換する **ローカルファーストなコンパイラ** です。外部リポジトリのコード・UI・デザインはコピーしません（クリーンルーム実装）。
 
-Instead of calling AI apps through a web form, **teach Claude Code the workflow as a Skill.**
-
-Japanese: [README.ja.md](./README.ja.md)
+English: [README.en.md](./README.en.md)
 
 ---
 
@@ -31,71 +28,71 @@ Japanese: [README.ja.md](./README.ja.md)
 
 ```text
 Before
-  AI app form → user fills fields → remote API call → result page
-  (setup, API keys, network, review burden)
+  AIアプリのフォーム → ユーザが入力 → 外部API → 結果画面
+  （セットアップ・APIキー・ネットワーク・レビュー負担）
 
 After
   genai.recipe.yml → genai compile → .claude/skills/proposal-review/
-                                        SKILL.md          ← behavior
-                                        input.schema.json ← input contract
-                                        references/       ← rubric, checklist
-                                        tests/            ← fixtures + golden
-                                     → Claude Code's built-in LLM
-                                     → markdown output + local artifacts
+                                        SKILL.md          ← 行動の定義
+                                        input.schema.json ← 入力契約
+                                        references/       ← ルブリック・チェックリスト
+                                        tests/            ← fixture + golden
+                                     → Claude Code 内蔵 LLM
+                                     → Markdown出力 + ローカル成果物
 ```
 
 ---
 
-## 2-Minute Quick Start
+## 2分 Quick Start
 
 ```bash
 git clone https://github.com/your-org/genai-for-claude-code
 cd genai-for-claude-code
 npm install && npm run build
 
-npx genai init                              # initialize .claude/ structure
-npx genai new my-skill                      # scaffold a new recipe
-npx genai compile examples/proposal-review # compile a bundled example
+npx genai init                               # .claude/ 構造を初期化
+npx genai new my-skill                       # レシピの雛形を生成
+npx genai compile --recipe examples/proposal-review  # 同梱サンプルをコンパイル
 npx genai validate examples/proposal-review
 ```
 
-Then open Claude Code and run:
+Claude Code で実行:
 
 ```
 /proposal-review この提案書を、リスク・論点・次アクションに分けてレビューしてください。
 ```
 
-No API key. No server. Just Claude.
+APIキー不要。サーバー不要。Claudeだけで動きます。
 
 ---
 
-## How It Works
+## 仕組み
 
 ```text
-  genai.recipe.yml         (your source of intent)
+  genai.recipe.yml         (意図の source)
        │
        ▼
   genai compile
-       │  ├─ validates schema + security rules
-       │  ├─ generates SKILL.md  (Handlebars template)
-       │  ├─ generates input.schema.json
-       │  ├─ copies references / templates / tests
-       │  └─ runs 3-layer eval: static → contract → qualitative
+       │  ├─ スキーマ + セキュリティルールを検証
+       │  ├─ SKILL.md を生成（Handlebarsテンプレート）
+       │  ├─ input.schema.json を生成
+       │  ├─ references / templates / tests をコピー
+       │  └─ 3層eval: static → contract → qualitative
        ▼
-  .claude/skills/<id>/     (deployable skill bundle)
+  .claude/skills/<id>/     (デプロイ可能なSkillバンドル)
        │
        ▼
-  Claude Code              (reads SKILL.md as capability)
+  Claude Code              (SKILL.mdを作業能力として読み込む)
        │
        ▼
-  /skill-name              (slash command, ready to use)
+  /skill-name              (スラッシュコマンドとして即使用可能)
 ```
 
-A **Recipe** is a YAML declaration of what a skill does. The **compiler** turns it into a self-contained bundle that Claude Code can invoke as a slash command.
+**Recipe** はSkillが何をするかを宣言するYAMLファイルです。**コンパイラ**がそれをClaude Codeのスラッシュコマンドとして実行できる自己完結型バンドルに変換します。
 
 ---
 
-## Recipe Example
+## Recipeの例
 
 ```yaml
 id: proposal-review
@@ -104,7 +101,7 @@ version: 0.1.0
 description: 提案書・企画書をレビューし、強み・懸念点・改善提案・未解決問題を構造化して出力するスキル。
 
 execution:
-  default_mode: claude-local   # no external API needed
+  default_mode: claude-local   # 外部API不要
 
 inputs:
   proposal:
@@ -124,138 +121,135 @@ outputs:
 security:
   network: deny-by-default
   secrets: forbid-hardcoded
-  allowed_tools: [Read, Grep, Glob]   # minimal, not Bash(*)
+  allowed_tools: [Read, Grep, Glob]   # 最小限、Bash(*)は禁止
 ```
 
-One YAML file → a fully testable, security-checked Claude Code Skill.
+YAMLファイル1つ → テスト可能・セキュリティチェック済みのClaude Code Skillに変換。
 
 ---
 
-## What It Generates
+## 生成されるもの
 
 ```text
 .claude/skills/<skill-id>/
-  SKILL.md              ← source of behavior (frontmatter + instructions)
-  genai.recipe.yml      ← source of intent (normalized)
-  input.schema.json     ← derived input contract (JSON Schema draft 2020-12)
-  references/           ← rubric, checklist, domain knowledge
-  templates/            ← output format templates
+  SKILL.md              ← 行動の source（frontmatter + 指示）
+  genai.recipe.yml      ← 意図の source（正規化版）
+  input.schema.json     ← 入力契約（JSON Schema draft 2020-12）
+  references/           ← ルブリック・チェックリスト・ドメイン知識
+  templates/            ← 出力フォーマットテンプレート
   tests/
-    fixtures/           ← sample inputs
-    golden/             ← expected outputs
-  eval.yml              ← 3-layer eval config
-  README.md             ← user-facing usage guide
+    fixtures/           ← サンプル入力
+    golden/             ← 期待出力
+  eval.yml              ← 3層eval設定
+  README.md             ← 利用ガイド
 ```
 
 ---
 
-## Skill ≠ Prompt
+## Skill ≠ プロンプト
 
-A Genai skill is more than a system prompt. Each skill is a small package that encodes:
+Genai Skillはシステムプロンプト以上のものです。各Skillは以下をまとめた小さなパッケージです。
 
-| What | Why |
+| 何を | なぜ |
 |---|---|
-| **When to invoke** | `description` + `auto_invocation` in frontmatter |
-| **Input contract** | `input.schema.json` — typed, validated fields |
-| **Reference materials** | rubrics, checklists, domain docs in `references/` |
-| **Output templates** | structured Markdown/JSON layouts in `templates/` |
-| **Quality rules** | `quality.rules` checked by the compiler |
-| **Security rules** | `allowed_tools`, `network`, `secrets` enforced at compile time |
-| **Failure handling** | recovery steps defined in `SKILL.md` body |
-| **Regression tests** | `tests/fixtures` + `tests/golden` checked by `genai test` |
+| **呼び出し条件** | frontmatterの`description` + `auto_invocation` |
+| **入力契約** | `input.schema.json` — 型付き・バリデーション済みフィールド |
+| **参照資料** | `references/` のルブリック・チェックリスト・ドメイン文書 |
+| **出力テンプレート** | `templates/` の構造化Markdown/JSONレイアウト |
+| **品質ルール** | `quality.rules`（コンパイル時チェック） |
+| **セキュリティルール** | `allowed_tools`、`network`、`secrets`（コンパイル時強制） |
+| **失敗時の復旧** | `SKILL.md` 本文に定義した手順 |
+| **回帰テスト** | `tests/fixtures` + `tests/golden`（`genai test`で実行） |
 
 ---
 
-## Why Local-First
+## なぜ Local-First か
 
-External APIs are convenient but in the Claude Code context they bring:
-setup overhead, API key management, network security review burden, and difficulty sharing on GitHub.
+外部APIは便利ですが、Claude Code 文脈では以下の問題があります。
 
-Genai's execution mode hierarchy — from most to least preferred:
+- セットアップが重い
+- APIキー管理が必要
+- ネットワーク・セキュリティリスクが増える
+- GitHubで公開しづらい
 
-| Mode | When to use |
+Genai の実行モード優先順位:
+
+| モード | 使う場面 |
 |---|---|
-| `claude-local` | Claude's own LLM is sufficient |
-| `local-file` | Read local Markdown / JSON / YAML |
-| `local-script` | Deterministic Python / TS / shell helpers |
-| `local-rag` | Grep/Glob over local docs (vector DB optional, post-v1.0) |
-| `mcp` | External SaaS connection truly needed |
-| `remote-api` | Last resort — opt-in, requires explicit user confirmation |
+| `claude-local` | Claude内蔵LLMで完結できる |
+| `local-file` | ローカルMarkdown / JSON / YAMLを参照 |
+| `local-script` | 決定的なPython / TS / Shellの補助処理 |
+| `local-rag` | Grep/Globでローカル文書検索（ベクタDBは後フェーズ任意） |
+| `mcp` | 外部SaaS接続が本当に必要なとき |
+| `remote-api` | 最終手段 — opt-in必須、ユーザ確認必須 |
 
-Benefits:
+メリット:
 
-- **Try it immediately** — no accounts, no keys, no config
-- **Easy to share on GitHub** — nothing sensitive in the repo
-- **Security review is simple** — network deny-by-default is self-documenting
-- **Uses Claude Code's full capability** — the built-in LLM is the primary engine
-- **Merges into existing projects** — drops a `.claude/skills/` folder, nothing else
+- **すぐ試せる** — アカウント・キー・設定不要
+- **GitHubで共有しやすい** — 機密情報がリポジトリに入らない
+- **セキュリティ説明が簡単** — deny-by-defaultは自己文書化される
+- **Claude Codeの本来の能力を活かせる** — 内蔵LLMが主エンジン
+- **既存プロジェクトに溶け込む** — `.claude/skills/` フォルダを追加するだけ
 
 ---
 
-## Included Examples
+## 同梱サンプル
 
-| Skill | Mode | What it does |
+| Skill | モード | 内容 |
 |---|---|---|
-| `proposal-review` | `claude-local` | Review proposals: strengths, concerns, open questions, action items |
-| `contract-review-lite` | `local-file` | Extract risk clauses, ambiguities, red flags from contracts |
-| `meeting-to-actions` | `claude-local` | Meeting notes → decisions / TODOs / next-meeting agenda |
+| `proposal-review` | `claude-local` | 提案書レビュー: 強み・懸念点・未解決問題・アクションアイテム |
+| `contract-review-lite` | `local-file` | 契約書のリスク条項・曖昧点・要確認箇所の一覧化 |
+| `meeting-to-actions` | `claude-local` | 議事録 → 決定事項 / TODO / 次回アジェンダ |
 
-Planned: `codebase-onboarding`, `local-rag-docs`, `remote-api-compat`
-
-Run an example:
-
-```bash
-npx genai compile examples/proposal-review --out /tmp/test-skill
-npx genai validate /tmp/test-skill
-```
+計画中: `codebase-onboarding`, `local-rag-docs`, `remote-api-compat`
 
 ---
 
-## Security Model
+## セキュリティ
 
-The compiler enforces security rules **before** emitting a skill bundle.
+コンパイラはSkillバンドルを出力する**前に**セキュリティルールを強制します。
 
 ```text
 network:        deny-by-default
-remote-api:     opt-in only, requires user confirmation
-secrets:        env-only — hardcoded keys are a compile error
-Bash:           allowlist — Bash(*), curl|bash, rm -rf, sudo are blocked
+remote-api:     opt-in のみ、ユーザ確認必須
+secrets:        env のみ — 直書きはコンパイルエラー
+Bash:           allowlist — Bash(*)・curl|bash・rm -rf・sudo はブロック
 side-effects:   read-only by default
-artifacts:      path traversal check (no .., no /, no ~)
+artifacts:      パストラバーサルチェック（..・/・~ 禁止）
 ```
 
-See [SECURITY.md](./SECURITY.md) for the full policy and error codes (GFC101–GFC302).
+詳細は [SECURITY.md](./SECURITY.md)（エラーコード GFC101–GFC302）。
 
 ---
 
-## Clean-Room Policy
+## クリーンルーム方針
 
-This project is a clean-room reimplementation of the *general idea* of declarative AI app registration for Claude Code Skills. **It does not copy** source code, UI, design assets, deployment templates, screenshots, or government-specific wording from any external repository.
+本プロジェクトは、公開情報から読み取れる「AIアプリを宣言的に登録する」という一般的な設計思想を、Claude Code Skill 向けにローカルファーストで**再実装**するものです。外部リポジトリのソースコード・UI・デザイン・デプロイテンプレート・行政向け固有文言は**コピーしません**。
 
-See [CLEANROOM.md](./CLEANROOM.md).
+詳細は [CLEANROOM.md](./CLEANROOM.md)。
 
 ---
 
-## Roadmap
+## ロードマップ
 
-| Version | Status | Contents |
+| バージョン | 状態 | 内容 |
 |---|---|---|
-| **v0.1** | ✅ shipped | Compiler MVP, recipe JSON Schema, `proposal-review` example |
-| **v0.2** | ✅ shipped | Hooks, 3-layer eval, `contract-review-lite` + `meeting-to-actions` examples, self-skills, subagents |
-| **v0.3** | planned | Plugin marketplace packaging, `genai pack`, `genai publish` |
-| **v0.4** | planned | Importers: prompt / README / OpenAPI / workflow / source-script |
-| **v1.0** | planned | Skill catalog, eval leaderboard, community templates |
+| **v0.1** | ✅ リリース済み | Compiler MVP、recipe JSON Schema、`proposal-review` example |
+| **v0.2** | ✅ リリース済み | Hooks、3層eval、`contract-review-lite` + `meeting-to-actions`、self-skills、subagents |
+| **v0.3** | 計画中 | Plugin marketplace packaging、`genai pack`、`genai publish` |
+| **v0.4** | 計画中 | Importer群: prompt / README / OpenAPI / workflow / script |
+| **v1.0** | 計画中 | Skill catalog、eval leaderboard、コミュニティテンプレート |
 
 ---
 
 ## Contributing
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md). Every PR must pass:
+[CONTRIBUTING.md](./CONTRIBUTING.md) を参照。すべての PR は以下の通過が必須です。
 
-- clean-room checklist
-- local-first principle check
-- `bash scripts/verify.sh` (typecheck + lint + build + smoke compile × 3)
+- クリーンルームチェックリスト
+- ローカルファーストの原則確認
+- `bash scripts/verify.sh`（typecheck + lint + build + smoke compile × 3）
 
 ## License
 
-MIT — see [LICENSE](./LICENSE).
+MIT — [LICENSE](./LICENSE)
