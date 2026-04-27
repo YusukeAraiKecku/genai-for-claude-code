@@ -29,22 +29,20 @@ def main() -> None:
 
     for prefix in BLOCKED_PREFIXES:
         if file_path.startswith(prefix):
-            result = {
-                "decision": "block",
-                "reason": f"[pre_write_check] Write to system path blocked: {file_path}",
-            }
-            print(json.dumps(result))
-            return
+            print(
+                f"[pre_write_check] Write to system path blocked: {file_path}",
+                file=sys.stderr,
+            )
+            sys.exit(2)
 
     lower = file_path.lower()
     for pat in BLOCKED_PATTERNS:
         if pat in lower:
-            result = {
-                "decision": "block",
-                "reason": f"[pre_write_check] Write to sensitive file blocked: {file_path}",
-            }
-            print(json.dumps(result))
-            return
+            print(
+                f"[pre_write_check] Write to sensitive file blocked: {file_path}",
+                file=sys.stderr,
+            )
+            sys.exit(2)
 
 
 if __name__ == "__main__":

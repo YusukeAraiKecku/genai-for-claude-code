@@ -30,12 +30,11 @@ def main() -> None:
 
     for pattern, reason in BLOCKED_PATTERNS:
         if re.search(pattern, command, re.IGNORECASE):
-            result = {
-                "decision": "block",
-                "reason": f"[pre_bash_guard] Blocked: {reason}\nCommand: {command[:200]}",
-            }
-            print(json.dumps(result))
-            sys.exit(0)
+            print(
+                f"[pre_bash_guard] Blocked: {reason}\nCommand: {command[:200]}",
+                file=sys.stderr,
+            )
+            sys.exit(2)
 
     sys.exit(0)
 
