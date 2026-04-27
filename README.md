@@ -46,7 +46,7 @@ After
 ## 2分 Quick Start
 
 ```bash
-git clone https://github.com/your-org/genai-for-claude-code
+git clone https://github.com/YusukeAraiKecku/genai-for-claude-code
 cd genai-for-claude-code
 npm install && npm run build
 
