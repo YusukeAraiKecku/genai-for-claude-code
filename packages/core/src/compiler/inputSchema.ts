@@ -47,27 +47,73 @@ function fieldToSchema(field: InputField): Record<string, unknown> {
     case 'select': {
       const s: Record<string, unknown> = { ...base, type: 'string' };
       if (field.items) s.enum = field.items.map((i) => i.value);
+      else if (field.options) s.enum = field.options;
       return s;
     }
     case 'multi_select': {
       const inner: Record<string, unknown> = { type: 'string' };
       if (field.items) inner.enum = field.items.map((i) => i.value);
+      else if (field.options) inner.enum = field.options;
       return { ...base, type: 'array', items: inner };
     }
-    case 'file':
+    case 'file': {
+      const inner: Record<string, unknown> = { type: 'string', description: 'file path' };
+      if (field.accept) inner.accept = field.accept;
+      return field.multiple ? { ...base, type: 'array', items: inner } : { ...base, ...inner };
+    }
     case 'files': {
       const inner: Record<string, unknown> = { type: 'string', description: 'file path' };
       if (field.accept) inner.accept = field.accept;
-      return field.multiple || field.type === 'files'
-        ? { ...base, type: 'array', items: inner }
-        : { ...base, ...inner };
+      const s: Record<string, unknown> = { ...base, type: 'array', items: inner };
+      if (typeof field.min_files === 'number') s.minItems = field.min_files;
+      if (typeof field.max_files === 'number') s.maxItems = field.max_files;
+      return s;
     }
     case 'directory':
       return { ...base, type: 'string', description: 'directory path' };
-    case 'json':
+    case 'json': {
+      if (field.schema) return { ...base, ...field.schema };
       return { ...base, type: 'object' };
+    }
     case 'yaml':
       return { ...base, type: 'string', description: 'YAML payload' };
+    case 'table': {
+      const typeMap: Record<string, string> = {
+        string: 'string',
+        number: 'number',
+        boolean: 'boolean',
+        date: 'string',
+      };
+      const rowProps: Record<string, unknown> = {};
+      for (const col of field.columns ?? []) {
+        const colSchema: Record<string, unknown> = {
+          type: typeMap[col.type ?? 'string'] ?? 'string',
+        };
+        if (col.description) colSchema.description = col.description;
+        rowProps[col.name] = colSchema;
+      }
+      const rowSchema: Record<string, unknown> = { type: 'object' };
+      if (Object.keys(rowProps).length > 0) rowSchema.properties = rowProps;
+      return { ...base, type: 'array', items: rowSchema };
+    }
+    case 'persona':
+      return {
+        ...base,
+        type: 'string',
+        description: base.description ?? 'role or persona identifier',
+      };
+    case 'longform_ref': {
+      const itemSchema: Record<string, unknown> = {
+        type: 'object',
+        required: ['path'],
+        properties: {
+          path: { type: 'string' },
+          label: { type: 'string' },
+        },
+        additionalProperties: false,
+      };
+      return { ...base, type: 'array', items: itemSchema };
+    }
     default:
       return { ...base, type: 'string' };
   }

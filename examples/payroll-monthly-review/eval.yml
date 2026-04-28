@@ -1,0 +1,16 @@
+skill: payroll-monthly-review
+version: 0.1.0
+cases:
+  - id: csv-anomalies
+    fixture: tests/fixtures/sample.attendance.csv
+    must_include:
+      - "## 検出された不整合"
+      - "## 確認が必要な追加情報"
+    must_not_include:
+      - "確定的に違法"
+      - "弁護士に相談せずに"
+    artifacts:
+      - name: review-checklist
+        path: review-checklist.md
+      - name: anomalies
+        path: anomalies.json

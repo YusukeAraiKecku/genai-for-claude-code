@@ -36,7 +36,7 @@ fi
 CLI="node packages/cli/dist/index.js"
 
 if [ -f packages/cli/dist/index.js ]; then
-  for ex in proposal-review contract-review-lite meeting-to-actions; do
+  for ex in proposal-review contract-review-lite meeting-to-actions payroll-monthly-review vendor-contract-redline; do
     if [ -f "examples/${ex}/genai.recipe.yml" ]; then
       echo "-- compile example: ${ex} --"
       OUT="$(mktemp -d)/${ex}"
@@ -45,6 +45,8 @@ if [ -f packages/cli/dist/index.js ]; then
       test -f "$OUT/input.schema.json"
       echo "-- validate example: ${ex} --"
       $CLI validate "$OUT"
+      echo "-- test example: ${ex} --"
+      $CLI test "$OUT"
     fi
   done
 else

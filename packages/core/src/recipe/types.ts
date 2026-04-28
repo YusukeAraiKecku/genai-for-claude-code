@@ -17,11 +17,25 @@ export type InputType =
   | 'files'
   | 'directory'
   | 'json'
-  | 'yaml';
+  | 'yaml'
+  | 'table'
+  | 'persona'
+  | 'longform_ref';
 
 export interface InputItem {
   title: string;
   value: string;
+}
+
+export interface TableColumn {
+  name: string;
+  type?: 'string' | 'number' | 'boolean' | 'date';
+  description?: string;
+}
+
+export interface LongformRefItem {
+  path: string;
+  label?: string;
 }
 
 export interface InputField {
@@ -36,11 +50,21 @@ export interface InputField {
   accept?: string[];
   options?: string[];
   items?: InputItem[];
+  /** For `files` type: minimum number of files required. */
+  min_files?: number;
+  /** For `files` type: maximum number of files allowed. */
+  max_files?: number;
+  /** For `table` type: column definitions. */
+  columns?: TableColumn[];
+  /** For `json` type: an inline JSON Schema describing the expected object structure. */
+  schema?: Record<string, unknown>;
 }
 
 export interface LocalContextRef {
   path: string;
   description?: string;
+  /** Mark this reference for indexing in local-rag mode. */
+  index?: boolean;
 }
 
 export interface ArtifactSpec {
@@ -88,6 +112,7 @@ export interface Recipe {
     network?: 'deny-by-default' | 'explicit-allow';
     secrets?: 'forbid-hardcoded' | 'env-only';
     side_effects?: 'read-only-by-default' | 'explicit-write';
+    pii?: 'forbid' | 'masked-only' | 'declared';
     allowed_tools?: string[];
     remote_api?: {
       enabled?: boolean;

@@ -30,6 +30,11 @@ const FORBIDDEN_BASH_PATTERNS: Array<{ pattern: RegExp; code: string; message: s
     code: 'GFC105',
     message: 'allowed-tools contains chmod 777 — over-permissive',
   },
+  {
+    pattern: /^Bash\(wget\b/i,
+    code: 'GFC108',
+    message: 'allowed-tools contains Bash(wget ...) — network egress not allowed',
+  },
 ];
 
 // crude secret detector — looks for literal-looking keys in the recipe
@@ -88,6 +93,28 @@ export function runSafetyChecks(recipe: Recipe): SafetyIssue[] {
     }
   }
 
+  // remote-api endpoint_env naming convention
+  const endpointEnv = recipe.security?.remote_api?.endpoint_env;
+  if (endpointEnv && !/^[A-Z_][A-Z0-9_]*$/.test(endpointEnv)) {
+    issues.push({
+      code: 'GFC207',
+      severity: 'warn',
+      message: `security.remote_api.endpoint_env "${endpointEnv}" is not a valid env-var name (expected ^[A-Z_][A-Z0-9_]*$)`,
+    });
+  }
+
+  // mcp mode without MCP tool declarations
+  if (recipe.execution.default_mode === 'mcp') {
+    const hasMcpTool = tools.some((t) => /^mcp__/i.test(t));
+    if (!hasMcpTool) {
+      issues.push({
+        code: 'GFC206',
+        severity: 'warn',
+        message: 'default_mode is mcp but no mcp__ tools are listed in allowed_tools',
+      });
+    }
+  }
+
   // network policy
   if (
     recipe.security?.network === 'explicit-allow' &&
@@ -119,6 +146,20 @@ export function runSafetyChecks(recipe: Recipe): SafetyIssue[] {
         severity: 'block',
         message: `artifact path is unsafe: "${a.path}"`,
       });
+    }
+  }
+
+  // PII field detection — warn if field names suggest personal data without a pii policy
+  const PII_FIELD_PATTERN = /address|mynumber|dob|phone|email/i;
+  if (!recipe.security?.pii) {
+    for (const k of Object.keys(recipe.inputs)) {
+      if (PII_FIELD_PATTERN.test(k)) {
+        issues.push({
+          code: 'GFC401',
+          severity: 'warn',
+          message: `input field "${k}" may contain personal data — declare security.pii (forbid | masked-only | declared)`,
+        });
+      }
     }
   }
 

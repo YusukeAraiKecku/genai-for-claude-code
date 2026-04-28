@@ -1,0 +1,93 @@
+id: payroll-monthly-review
+name: Payroll Monthly Review
+version: 0.1.0
+description: 月次給与計算前の勤怠表を読み、計算上の不整合候補（残業矛盾・打刻欠落・有給整合）を一覧化するレビュー支援。実計算は行わない。
+
+tags:
+  - payroll
+  - review
+  - sme
+
+origin:
+  type: original
+  source_code_copied: false
+
+execution:
+  default_mode: local-file
+  allowed_modes:
+    - local-file
+    - claude-local
+  remote_api_required: false
+
+inputs:
+  attendance_table:
+    type: table
+    title: 勤怠表
+    description: スタッフごとの月次勤怠。1 行 1 スタッフ 1 日想定。
+    required: true
+    columns:
+      - name: staff_id
+        type: string
+        description: スタッフ識別子
+      - name: date
+        type: date
+        description: 対象日（YYYY-MM-DD）
+      - name: work_start
+        type: string
+        description: 出勤打刻（HH:MM）
+      - name: work_end
+        type: string
+        description: 退勤打刻（HH:MM）
+      - name: overtime_hours
+        type: number
+        description: 残業時間
+      - name: leave_type
+        type: string
+        description: 休暇種別（有給・欠勤・振休など、任意）
+  prev_month_summary:
+    type: markdown
+    title: 前月差分メモ
+    description: 前月の集計サマリ（任意、人間記述のメモ）。
+    required: false
+  policy_notes:
+    type: markdown
+    title: 社内運用メモ
+    description: 残業・有給・休憩の社内運用ポリシー（任意）。
+    required: false
+
+local_context:
+  references:
+    - path: references/payroll-axis.md
+      description: 勤怠チェック観点（汎用）
+  templates: []
+
+outputs:
+  primary: markdown
+  artifacts:
+    - name: review-checklist
+      path: review-checklist.md
+      format: markdown
+    - name: anomalies
+      path: anomalies.json
+      format: json
+
+quality:
+  rules:
+    - separate_facts_assumptions_opinions
+    - list_open_questions
+  eval:
+    fixture_dir: ./tests/fixtures
+    golden_dir: ./tests/golden
+
+security:
+  network: deny-by-default
+  secrets: forbid-hardcoded
+  side_effects: read-only-by-default
+  allowed_tools:
+    - Read
+    - Grep
+    - Glob
+
+claude:
+  skill_name: payroll-monthly-review
+  auto_invocation: true

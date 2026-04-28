@@ -77,7 +77,10 @@ export function compile(recipePath: string, opts: CompileOptions): CompileResult
       const src = resolve(recipeDir, itemPath);
       if (!existsSync(src)) continue;
       const rel = relative(recipeDir, src);
-      const dst = join(outDir, rel);
+      // Flatten paths that escape the recipe dir (e.g. ../../references/_shared/...)
+      // to prevent path traversal in the output bundle.
+      const safeRel = flattenEscapingPath(rel);
+      const dst = join(outDir, safeRel);
       ensureDir(dirname(dst));
       copyFileSync(src, dst);
       files.push(dst);
@@ -105,6 +108,20 @@ export function compile(recipePath: string, opts: CompileOptions): CompileResult
 
 function ensureDir(p: string): void {
   mkdirSync(p, { recursive: true });
+}
+
+/**
+ * Strip leading `../` segments so references that escape the recipe directory
+ * (e.g. `../../references/_shared/rubrics/foo.md`) are placed directly inside
+ * the output bundle without path traversal.
+ * Example: `../../references/_shared/rubrics/foo.md` → `_shared/rubrics/foo.md`
+ */
+function flattenEscapingPath(rel: string): string {
+  const parts = rel.split('/');
+  while (parts.length > 0 && parts[0] === '..') {
+    parts.shift();
+  }
+  return parts.join('/') || 'unknown';
 }
 
 function copyDir(src: string, dst: string): void {

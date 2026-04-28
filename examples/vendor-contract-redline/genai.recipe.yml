@@ -1,0 +1,83 @@
+id: vendor-contract-redline
+name: Vendor Contract Redline
+version: 0.1.0
+description: ベンダー契約ドラフトを読み、リスク条項と推奨修正文（汎用）を一覧化。buyer / seller のいずれの立場かで論点重み付けを切り替える。
+
+tags:
+  - contract
+  - redline
+  - vendor
+
+origin:
+  type: original
+  source_code_copied: false
+
+execution:
+  default_mode: local-file
+  allowed_modes:
+    - local-file
+    - claude-local
+  remote_api_required: false
+
+inputs:
+  contract_file:
+    type: file
+    title: 契約ドラフト
+    description: レビュー対象のベンダー契約（.md / .txt）。
+    required: true
+    accept:
+      - .md
+      - .txt
+  party_role:
+    type: persona
+    title: 自社の立場
+    description: 自社が契約のどちら側か。buyer / seller / both から選ぶ。
+    required: true
+  priority_topics:
+    type: multi_select
+    title: 重点論点
+    description: 重み付けする論点（複数選択可）。
+    required: false
+    options:
+      - liability
+      - ip
+      - data
+      - term
+      - payment
+
+local_context:
+  references:
+    - path: references/redline-axis.md
+      description: ベンダー契約の汎用論点鏡
+  templates: []
+
+outputs:
+  primary: markdown
+  artifacts:
+    - name: redline-suggestions
+      path: redline-suggestions.md
+      format: markdown
+    - name: risk-matrix
+      path: risk-matrix.json
+      format: json
+
+quality:
+  rules:
+    - separate_facts_assumptions_opinions
+    - list_open_questions
+  eval:
+    fixture_dir: ./tests/fixtures
+    golden_dir: ./tests/golden
+
+security:
+  network: deny-by-default
+  secrets: forbid-hardcoded
+  side_effects: read-only-by-default
+  allowed_tools:
+    - Read
+    - Grep
+    - Glob
+
+claude:
+  skill_name: vendor-contract-redline
+  auto_invocation: true

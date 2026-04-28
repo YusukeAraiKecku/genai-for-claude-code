@@ -41,7 +41,7 @@ ${inputsBlock}
 
 1. ユーザーの依頼を確認する
 2. 入力不足があれば、不足項目だけを聞き返す
-3. 必要に応じて参照ファイルを読む
+3. 必要に応じて参照ファイルを読む${recipe.execution.default_mode === 'local-rag' ? '\n   - `index: true` が付いた references は RAG インデックス対象として優先的に参照する\n   - 回答には必ず引用元 (ファイル名:行番号) を記載する' : ''}
 4. 実行モード (\`${recipe.execution.default_mode}\`) に従って処理する
 5. 出力契約に沿って回答する
 6. 必要なartifactを生成する
@@ -79,8 +79,15 @@ function renderInputs(recipe: Recipe): string {
   for (const [key, field] of Object.entries(recipe.inputs)) {
     const req = field.required ? '**required**' : 'optional';
     const title = field.title ?? key;
-    const items = field.items ? ` (choices: ${field.items.map((i) => i.value).join(', ')})` : '';
-    lines.push(`- \`${key}\` — ${title} — ${field.type}${items} — ${req}`);
+    let extra = '';
+    if (field.items) {
+      extra = ` (choices: ${field.items.map((i) => i.value).join(', ')})`;
+    } else if (field.options && field.options.length > 0) {
+      extra = ` (choices: ${field.options.join(', ')})`;
+    } else if (field.type === 'table' && field.columns && field.columns.length > 0) {
+      extra = ` (columns: ${field.columns.map((c) => c.name).join(', ')})`;
+    }
+    lines.push(`- \`${key}\` — ${title} — ${field.type}${extra} — ${req}`);
   }
   return lines.join('\n');
 }

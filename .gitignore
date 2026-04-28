@@ -34,6 +34,9 @@ __pycache__/
 .genai/working-context.md
 .genai/cache/
 
+# Trial scaffolds for v0.2.x scenario testing (not for CI)
+genai-apps/
+
 # Test / coverage
 coverage/
 .nyc_output/

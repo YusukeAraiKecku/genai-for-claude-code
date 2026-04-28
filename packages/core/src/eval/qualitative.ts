@@ -1,18 +1,20 @@
 import { existsSync, readFileSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { basename, join, resolve } from 'node:path';
+import { StringMatchScorer } from './scorers/index.js';
 import type { EvalCase, EvalFinding } from './types.js';
 
 /**
- * MVP qualitative check:
- *   - For each case, treat the fixture file as the "expected golden surface" of an LLM
- *     output and verify that must_include / must_not_include constraints would pass
- *     against the fixture itself. This is a SCHEMA-LEVEL CHECK that the eval case is
- *     well-formed and the fixture exists. It does NOT call an LLM.
+ * Qualitative eval layer.
  *
- *   v0.3+ will replace this with actual run + scoring.
+ * v0.2.x: Uses StringMatchScorer to check must_include / must_not_include against
+ * a golden output file in tests/golden/<fixture-basename>.
+ * When no golden file exists, the case emits a warn (not pass) so gaps surface.
+ *
+ * v0.3+: Replace StringMatchScorer with an LLM-based scorer implementing QualScorer.
  */
 export function qualitativeChecks(skillDir: string, evalCases: EvalCase[]): EvalFinding[] {
   const findings: EvalFinding[] = [];
+  const scorer = new StringMatchScorer();
 
   for (const c of evalCases) {
     const fixturePath = resolve(skillDir, c.fixture);
@@ -26,8 +28,8 @@ export function qualitativeChecks(skillDir: string, evalCases: EvalCase[]): Eval
       continue;
     }
 
-    const text = readFileSync(fixturePath, 'utf8');
-    if (text.trim().length === 0) {
+    const fixtureText = readFileSync(fixturePath, 'utf8');
+    if (fixtureText.trim().length === 0) {
       findings.push({
         layer: 'qualitative',
         caseId: c.id,
@@ -37,14 +39,27 @@ export function qualitativeChecks(skillDir: string, evalCases: EvalCase[]): Eval
       continue;
     }
 
-    findings.push({
-      layer: 'qualitative',
-      caseId: c.id,
-      status: 'pass',
-      message: `fixture loaded (${text.length} chars)`,
+    // Resolve golden file: tests/golden/<fixture-basename>
+    const goldenPath = join(skillDir, 'tests', 'golden', basename(fixturePath));
+    const golden = existsSync(goldenPath) ? readFileSync(goldenPath, 'utf8') : undefined;
+
+    // Run string-match scoring
+    const results = scorer.score({
+      golden,
+      mustInclude: c.must_include ?? [],
+      mustNotInclude: c.must_not_include ?? [],
     });
 
-    // For each must_include, verify the keyword is meaningful (non-empty)
+    for (const r of results) {
+      findings.push({
+        layer: 'qualitative',
+        caseId: c.id,
+        status: r.pass ? 'pass' : golden === undefined ? 'warn' : 'fail',
+        message: r.message,
+      });
+    }
+
+    // Validate empty must_include entries
     for (const kw of c.must_include ?? []) {
       if (kw.trim().length === 0) {
         findings.push({
@@ -56,7 +71,7 @@ export function qualitativeChecks(skillDir: string, evalCases: EvalCase[]): Eval
       }
     }
 
-    // Artifact path declared in case must be safe relative path
+    // Artifact path safety
     for (const a of c.artifacts ?? []) {
       if (a.path.startsWith('/') || a.path.includes('..')) {
         findings.push({
@@ -69,16 +84,14 @@ export function qualitativeChecks(skillDir: string, evalCases: EvalCase[]): Eval
     }
   }
 
-  // hint when no eval cases are declared
   if (evalCases.length === 0) {
     findings.push({
       layer: 'qualitative',
       status: 'warn',
-      message: 'no eval cases declared in eval.yml',
+      message: 'no eval cases declared in eval.yml — add at least one case with must_include',
     });
   }
 
-  // confirm at least one fixture file exists in tests/fixtures (best-effort)
   const fixturesDir = join(skillDir, 'tests', 'fixtures');
   if (!existsSync(fixturesDir) && evalCases.length === 0) {
     findings.push({

@@ -1,0 +1,16 @@
+skill: vendor-contract-redline
+version: 0.1.0
+cases:
+  - id: buyer-side-basic
+    fixture: tests/fixtures/sample.contract.md
+    must_include:
+      - "## リスク論点"
+      - "## 推奨修正文"
+    must_not_include:
+      - "確定的に違法"
+      - "弁護士に相談せずに"
+    artifacts:
+      - name: redline-suggestions
+        path: redline-suggestions.md
+      - name: risk-matrix
+        path: risk-matrix.json

@@ -4,6 +4,8 @@ export interface EvalCase {
   must_include?: string[];
   must_not_include?: string[];
   artifacts?: Array<{ name: string; path: string }>;
+  /** Optional references to shared rubric files (relative to skill bundle root). */
+  rubric_refs?: string[];
 }
 
 export interface EvalSpec {
