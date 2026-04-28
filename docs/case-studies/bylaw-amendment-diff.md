@@ -1,6 +1,6 @@
 # Case Study: 例規改正差分（Bylaw Amendment Diff）
 
-> **CLEANROOM Notice**: This case study uses fully synthetic generic data and rubrics. It does not reproduce wording from any specific jurisdiction, ordinance, drafting manual, or government source. The recipe and example texts shown are illustrative templates designed to be copied and adapted to your own use case.
+このケーススタディは「コピーして自分の用途に改造する」想定の汎用テンプレートです。fixture / rubric は合成データで、特定自治体・実在条文・特定マニュアルの文言は含みません。
 
 ## 概要
 
@@ -136,7 +136,7 @@ claude:
 
 このスキーマを `references/artifact.schema.json` として保存し、`eval.yml` の `contract` ステップで参照することで、LLM 出力が構造的に正しいかどうかを `genai validate` / `genai test` で自動検証できます。
 
-## Sample fixture（合成データ、CLEANROOM-safe）
+## Sample fixture（合成データ）
 
 `tests/fixtures/sample.current.md`（現行条文の例・完全架空）:
 
@@ -234,12 +234,12 @@ claude:
 | 複数例規の一括処理 | `inputs.current_text` の代わりに `files` 型に変更して複数ファイルを受け取ることも可能 |
 | 改正理由の詳細化 | `revision_notes` に改正経緯・審議会答申等の抜粋を入れると `rationale` の精度が上がる |
 
-## CLEANROOM チェックリスト（自分の用途に転用するとき）
+## 自分の用途に転用するときの注意
 
-- [ ] fixture は合成または自分の自治体の管理下にある条文のみ
-- [ ] 実在の条例文をそのまま fixture に使うときは著作権・情報管理ポリシーを確認
-- [ ] `references/rubric_diff_format.md` は汎用観点を自前で書き起こす（特定マニュアルの文言流用なし）
-- [ ] 改正案は公表前の機微情報になりうる → local-first 運用を厳守
+- fixture は合成または自分の組織の管理下にある条文のみを使う
+- 実在の条例文を fixture に使うときは著作権・情報管理ポリシーを事前確認
+- `references/rubric_diff_format.md` は汎用観点を自前で書き起こす（特定マニュアルの文言流用なし）
+- 改正案は公表前の機微情報になりうる → local-first 運用を厳守
 
 ## 関連
 

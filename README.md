@@ -12,14 +12,13 @@
 <p align="center">
   <img src="https://img.shields.io/badge/local--first-✓-brightgreen" alt="local-first" />
   <img src="https://img.shields.io/badge/APIキー-デフォルト不要-blue" alt="no API key" />
-  <img src="https://img.shields.io/badge/clean--room-再実装-lightgrey" alt="clean-room" />
   <img src="https://img.shields.io/badge/security-deny--by--default-orange" alt="security-first" />
   <img src="https://img.shields.io/badge/license-MIT-green" alt="MIT" />
 </p>
 
 ---
 
-Genai for Claude Code は、AIアプリ、業務フォーム、プロンプト、ローカルRAG手順、必要に応じた外部APIを、Claude Code で再利用可能な **Skill** に変換する **ローカルファーストなコンパイラ** です。外部リポジトリのコード・UI・デザインはコピーしません（クリーンルーム実装）。
+Genai for Claude Code は、AIアプリ、業務フォーム、プロンプト、ローカルRAG手順、必要に応じた外部APIを、Claude Code で再利用可能な **Skill** に変換する **ローカルファーストなコンパイラ** です。
 
 English: [README.en.md](./README.en.md)
 
@@ -223,14 +222,6 @@ artifacts:      パストラバーサルチェック（..・/・~ 禁止）
 
 ---
 
-## クリーンルーム方針
-
-本プロジェクトは、公開情報から読み取れる「AIアプリを宣言的に登録する」という一般的な設計思想を、Claude Code Skill 向けにローカルファーストで**再実装**するものです。外部リポジトリのソースコード・UI・デザイン・デプロイテンプレート・行政向け固有文言は**コピーしません**。
-
-詳細は [CLEANROOM.md](./CLEANROOM.md)。
-
----
-
 ## ロードマップ
 
 | バージョン | 状態 | 内容 |
@@ -265,7 +256,7 @@ artifacts:      パストラバーサルチェック（..・/・~ 禁止）
 | [議会答弁ドラフター](./docs/case-studies/legislative-qa-drafter.md) | 公共セクター | `local-rag` | 過去議事録 → 論点抽出 → 想定問答 → 答弁書骨子 |
 | [例規改正差分](./docs/case-studies/bylaw-amendment-diff.md) | 公共セクター / 法務 | `local-file` | 現行条文 + 改正案 → 構造化新旧対照表（JSON artifact） |
 
-> **CLEANROOM**: ケーススタディのデータはすべて合成です。実在組織名・実在条文・特定マニュアル文言は含みません。
+ケーススタディのデータはすべて合成です（実在組織名・実在条文を含みません）。
 
 将来的に [v0.5 genai-marketplace](tasks/backlog.md) が立ち上がった時点で runnable 版はそちらに移植予定です。
 
@@ -275,9 +266,10 @@ artifacts:      パストラバーサルチェック（..・/・~ 禁止）
 
 [CONTRIBUTING.md](./CONTRIBUTING.md) を参照。すべての PR は以下の通過が必須です。
 
-- クリーンルームチェックリスト
 - ローカルファーストの原則確認
 - `bash scripts/verify.sh`（typecheck + lint + build + smoke compile × 3）
+
+本プロジェクトは外部リポジトリのコード・UI・デザインをコピーせずクリーンルームで再実装しています。詳細は [CLEANROOM.md](./CLEANROOM.md) を参照。
 
 ## License
 

@@ -1,6 +1,6 @@
 # Case Study: 議会答弁ドラフター（Legislative Q&A Drafter）
 
-> **CLEANROOM Notice**: This case study uses fully synthetic generic data and rubrics. It does not reproduce wording from any specific jurisdiction, council, drafting manual, or government source. The recipe and example texts shown are illustrative templates designed to be copied and adapted to your own use case.
+このケーススタディは「コピーして自分の用途に改造する」想定の汎用テンプレートです。fixture / rubric は合成データで、特定自治体・特定マニュアルの文言は含みません。
 
 ## 概要
 
@@ -107,7 +107,7 @@ claude:
   auto_invocation: true
 ```
 
-## Sample fixture（合成データ、CLEANROOM-safe）
+## Sample fixture（合成データ）
 
 `tests/fixtures/sample.input.md`（今期の論点メモ）:
 
@@ -171,12 +171,12 @@ claude:
 | 機微情報 | 個人名・住所等が含まれる議事録を扱う場合は `security.pii: declared` を保ち、出力で必ずマスク |
 | 引用形式 | `references/_shared/rubrics/citation-required.md` を参照し、`source: <ファイル名>:<行番号>` 形式を強制 |
 
-## CLEANROOM チェックリスト（自分の用途に転用するとき）
+## 自分の用途に転用するときの注意
 
-- [ ] fixture / archives は合成または自分の自治体の管理下にある資料のみ
-- [ ] 法制執務マニュアル等を `references/` に持ち込まない（汎用観点を自前で書き起こす）
-- [ ] 自治体特定の書式コード・通知文の言い回しを Skill 内に直書きしない
-- [ ] 出力に個人名・住所・電話番号等が混入しない（`pii: declared` の運用方針を明記）
+- fixture / archives は合成または自分の組織の管理下にある資料のみを使う
+- 特定マニュアル等を `references/` にそのまま持ち込まず、汎用観点を自前で書き起こす
+- 特定書式コード・通知文の言い回しを Skill 内に直書きしない
+- 出力に個人名・住所・電話番号等が混入しないよう `pii: declared` の運用方針を明記
 
 ## 関連
 

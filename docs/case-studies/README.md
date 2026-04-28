@@ -1,8 +1,8 @@
 # Case Studies
 
-> **CLEANROOM Notice**: All case studies in this directory use fully synthetic generic data and rubrics. They do not reproduce wording from any specific jurisdiction, government source, or proprietary manual. Each case study is an illustrative template designed to be copied and adapted to your own use case.
-
 ドメイン特化の Genai Skill レシピ例を文書として収録しています。各 case study は recipe YAML + fixture 例 + 使い方を含む「コピーして改造する」形式で書かれています。
+
+データはすべて合成です（実在組織名・実在条文・特定マニュアル文言を含みません）。
 
 将来的に `genai-marketplace`（v0.5 計画、D-009）が立ち上がった時点で、runnable 版はそちらに移植される予定です。
 

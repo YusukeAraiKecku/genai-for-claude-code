@@ -12,14 +12,13 @@
 <p align="center">
   <img src="https://img.shields.io/badge/local--first-✓-brightgreen" alt="local-first" />
   <img src="https://img.shields.io/badge/API%20key-not%20required%20by%20default-blue" alt="no API key" />
-  <img src="https://img.shields.io/badge/clean--room-reimplementation-lightgrey" alt="clean-room" />
   <img src="https://img.shields.io/badge/security-deny--by--default-orange" alt="security-first" />
   <img src="https://img.shields.io/badge/license-MIT-green" alt="MIT" />
 </p>
 
 ---
 
-Genai for Claude Code is a **local-first compiler** that converts AI app workflows, business forms, prompts, local RAG procedures, and (optional) REST APIs into reusable **Claude Code Skills** — without copying code, UI, or design from any external repository.
+Genai for Claude Code is a **local-first compiler** that converts AI app workflows, business forms, prompts, local RAG procedures, and (optional) REST APIs into reusable **Claude Code Skills**.
 
 Instead of calling AI apps through a web form, **teach Claude Code the workflow as a Skill.**
 
@@ -228,14 +227,6 @@ See [SECURITY.md](./SECURITY.md) for the full policy and error codes (GFC101–G
 
 ---
 
-## Clean-Room Policy
-
-This project is a clean-room reimplementation of the *general idea* of declarative AI app registration for Claude Code Skills. **It does not copy** source code, UI, design assets, deployment templates, screenshots, or government-specific wording from any external repository.
-
-See [CLEANROOM.md](./CLEANROOM.md).
-
----
-
 ## Roadmap
 
 | Version | Status | Contents |
@@ -270,7 +261,7 @@ Sector-specific Skill recipes are documented in `docs/case-studies/` (these are 
 | [Legislative Q&A Drafter](./docs/case-studies/legislative-qa-drafter.md) | Public sector | `local-rag` | Past minutes → topic extraction → Q&A draft → talking points |
 | [Bylaw Amendment Diff](./docs/case-studies/bylaw-amendment-diff.md) | Public sector / legal | `local-file` | Current text + revised draft → structured comparison table (JSON artifact) |
 
-> **CLEANROOM**: All case study data is synthetic. No real jurisdiction names, ordinance text, or manual wording is included.
+All case study data is synthetic — no real organization names, ordinance text, or manual wording is included.
 
 Runnable versions will migrate to [v0.5 genai-marketplace](tasks/backlog.md) once it launches.
 
@@ -280,9 +271,10 @@ Runnable versions will migrate to [v0.5 genai-marketplace](tasks/backlog.md) onc
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md). Every PR must pass:
 
-- clean-room checklist
 - local-first principle check
 - `bash scripts/verify.sh` (typecheck + lint + build + smoke compile × 3)
+
+This project is a clean-room reimplementation that does not copy code, UI, or design assets from any external repository — see [CLEANROOM.md](./CLEANROOM.md) for the policy.
 
 ## License
 
