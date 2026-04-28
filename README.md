@@ -6,7 +6,7 @@
 
 <p align="center">
   <strong>AIアプリを「呼び出す」のではなく、Claude Code に「習得」させる。</strong><br>
-  自治体・士業・中小企業向け local-first Claude Code Skill コンパイラ。汎用テンプレートと業界特化ケーススタディを同梱。
+  業界横断的に使える local-first Claude Code Skill コンパイラ。汎用テンプレートを出発点に、自分のユースケースへ特化させていける。
 </p>
 
 <p align="center">
@@ -245,22 +245,27 @@ artifacts:      パストラバーサルチェック（..・/・~ 禁止）
 
 ## 想定ユースケース
 
-**自治体職員**: 議会答弁ドラフト・例規改正差分（新旧対照表）・申請窓口問い合わせトリアージ・制度説明文書の Q&A 要約。法制執務の定型作業から条例改正のドラフト支援まで、Claude Code Skill として Genai で管理できます。
+業界を問わず、定型的な業務知識を Skill として整形・再利用したい場面に適します。
 
-**中小企業・士業**: ベンダー契約レビュー・勤怠表の月次レビュー・税務相談インテーク・提案書レビュー。ローカルでの文書処理と構造化アウトプット生成に local-first Skill が向いています。
+- **企業全般**: 提案書レビュー、契約書レビュー、議事録 → 決定事項・TODO 抽出、勤怠表の月次レビュー、ベンダー契約のレッドライン
+- **士業・法務**: 契約レビュー、相談インテーク、免責文付きの方針整理
+- **公共セクター**: 申請窓口の問い合わせトリアージ、制度説明文書の Q&A 要約、議会想定問答ドラフト、例規改正の新旧対照表
+- **研究・教育・NPO** など: 構造化文書レビュー、引用必須の要約、ドメイン rubric の追加
+
+ダウンロード時点では汎用テンプレートが揃っているだけです。`references/` に自前ルブリックを足す、`security.pii: declared` を宣言する、`local-rag` で `index: true` を付ける、といった**「育てる」操作で自分のユースケースに特化**させていくのが想定の使い方です。
 
 ---
 
 ## Case Studies
 
-業界特化の Skill レシピを `docs/case-studies/` に文書として収録しています。Recipe をコピーして `genai new` で自分のプロジェクトに組み込む想定です。
+業界特化の Skill レシピ例は `docs/case-studies/` に文書として収録しています。Recipe をコピーして `genai new` で自分のプロジェクトに組み込む想定です（特定の業界専用ツールという位置づけではありません — 一例として読んでください）。
 
-| Case Study | ドメイン | モード | 説明 |
+| Case Study | ドメイン例 | モード | 説明 |
 |---|---|---|---|
-| [議会答弁ドラフター](./docs/case-studies/legislative-qa-drafter.md) | 自治体 | `local-rag` | 過去議事録 → 論点抽出 → 想定問答 → 答弁書骨子 |
-| [例規改正差分](./docs/case-studies/bylaw-amendment-diff.md) | 自治体 / 法務 | `local-file` | 現行条文 + 改正案 → 構造化新旧対照表（JSON artifact） |
+| [議会答弁ドラフター](./docs/case-studies/legislative-qa-drafter.md) | 公共セクター | `local-rag` | 過去議事録 → 論点抽出 → 想定問答 → 答弁書骨子 |
+| [例規改正差分](./docs/case-studies/bylaw-amendment-diff.md) | 公共セクター / 法務 | `local-file` | 現行条文 + 改正案 → 構造化新旧対照表（JSON artifact） |
 
-> **CLEANROOM**: ケーススタディのデータはすべて合成です。実在自治体名・実在条文・法制執務マニュアル文言は含みません。
+> **CLEANROOM**: ケーススタディのデータはすべて合成です。実在組織名・実在条文・特定マニュアル文言は含みません。
 
 将来的に [v0.5 genai-marketplace](tasks/backlog.md) が立ち上がった時点で runnable 版はそちらに移植予定です。
 

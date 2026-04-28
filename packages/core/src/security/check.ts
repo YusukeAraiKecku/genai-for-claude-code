@@ -150,7 +150,8 @@ export function runSafetyChecks(recipe: Recipe): SafetyIssue[] {
   }
 
   // PII field detection — warn if field names suggest personal data without a pii policy
-  const PII_FIELD_PATTERN = /address|mynumber|dob|phone|email/i;
+  const PII_FIELD_PATTERN =
+    /address|dob|phone|email|national[_-]?id|tax[_-]?id|ssn|mynumber|passport/i;
   if (!recipe.security?.pii) {
     for (const k of Object.keys(recipe.inputs)) {
       if (PII_FIELD_PATTERN.test(k)) {

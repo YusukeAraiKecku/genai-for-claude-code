@@ -25,12 +25,19 @@
     "claude-code",
     "claude-code-skill",
     "claude-skill",
+    "karpathy-skills",
     "local-first",
     "ai-app",
     "compiler",
+    "business-automation",
+    "knowledge-work",
+    "productivity",
+    "legal-tech",
+    "smb",
+    "sme",
+    "public-sector",
     "local-government",
-    "japan",
-    "karpathy-skills"
+    "japan"
   ],
   "devDependencies": {
     "@biomejs/biome": "^1.9.0",

@@ -6,7 +6,7 @@
 
 <p align="center">
   <strong>Turn AI apps into local-first Claude Code Skills.</strong><br>
-  local-first Claude Code Skill compiler for Japanese local government, SMB, and legal practice — with generic templates and domain case studies.
+  Cross-industry local-first compiler. Start from generic templates, then specialize the Skill bundle to your own use case.
 </p>
 
 <p align="center">
@@ -250,20 +250,25 @@ See [CLEANROOM.md](./CLEANROOM.md).
 
 ## Use Cases
 
-**Local government**: legislative Q&A drafting, bylaw amendment diff (before/after comparison tables), citizen inquiry triage, policy document Q&A summarization. Genai Skills streamline the rule-heavy document work that dominates local government operations — from legislative drafting support to council prep.
+Genai is cross-industry. It fits any context where structured business knowledge needs to be turned into a reusable Skill bundle.
 
-**SMB / legal practice**: vendor contract review, monthly payroll review, tax advisory intake, proposal review. Local-first Skills are well-suited to document processing and structured output generation with sensitive information that should not leave the local environment.
+- **Business in general**: proposal reviews, contract reviews, meeting-minutes → decisions/TODOs, monthly payroll review, vendor contract redlines
+- **Legal / advisory practice**: contract review, intake summarization, structured advisories with disclaimers
+- **Public sector**: citizen inquiry triage, policy document Q&A, legislative talking-point drafting, bylaw amendment comparison tables
+- **Research / education / NPO**: structured document review, citation-required summaries, custom domain rubrics
+
+Out of the box you get generic templates. The intended workflow is to **grow them into your own use case** — add rubrics under `references/`, declare `security.pii: declared`, enable `local-rag` indexing on selected references, etc.
 
 ---
 
 ## Case Studies
 
-Domain-specific Skill recipes are documented in `docs/case-studies/`. Copy the recipe into your own project with `genai new`.
+Sector-specific Skill recipes are documented in `docs/case-studies/` (these are illustrative examples, not built-in domain features — copy and adapt). Use `genai new` to scaffold your own, then paste the recipe.
 
-| Case Study | Domain | Mode | Description |
+| Case Study | Example domain | Mode | Description |
 |---|---|---|---|
-| [Legislative Q&A Drafter](./docs/case-studies/legislative-qa-drafter.md) | Local government | `local-rag` | Past minutes → topic extraction → Q&A draft → talking points |
-| [Bylaw Amendment Diff](./docs/case-studies/bylaw-amendment-diff.md) | Local government / legal | `local-file` | Current text + revised draft → structured comparison table (JSON artifact) |
+| [Legislative Q&A Drafter](./docs/case-studies/legislative-qa-drafter.md) | Public sector | `local-rag` | Past minutes → topic extraction → Q&A draft → talking points |
+| [Bylaw Amendment Diff](./docs/case-studies/bylaw-amendment-diff.md) | Public sector / legal | `local-file` | Current text + revised draft → structured comparison table (JSON artifact) |
 
 > **CLEANROOM**: All case study data is synthetic. No real jurisdiction names, ordinance text, or manual wording is included.
 
