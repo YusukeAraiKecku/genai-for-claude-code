@@ -7,6 +7,20 @@
 **Genai for Claude Code** は、AIアプリ仕様 → Claude Code Skill への local-first コンパイラです。
 clean-room 実装であり、外部 GenAI リポジトリのコード/UI/デザインはコピーしません。
 
+## 対応プラットフォーム
+
+**macOS / Linux / Windows のいずれの Claude Code でも動作します**（Node.js >= 22）。
+
+- ビルド・検証スクリプトはすべて Node ベース（`scripts/verify.mjs`、`packages/cli/scripts/postbuild.mjs`）。bash 専用構文に依存しない
+- `chmod` などの POSIX 専用コマンドを `npm install` 経路に入れない
+- パス処理は `node:path` 経由
+- `.gitattributes` で `eol=lf` を強制し、Windows clone 時の CRLF を防ぐ
+
+新機能・修正を入れる際も **Windows 動作を壊さないこと**：
+- `spawnSync` で `npm` を呼ぶときは `process.platform === 'win32' ? 'npm.cmd' : 'npm'` で切替（`shell: true` の deprecation を避ける）
+- 一時ディレクトリは `os.tmpdir()` 経由（`/tmp` を直書きしない）
+- 改行は `split(/\r?\n/)` で扱う
+
 ## Core Rule
 
 実装の前に、必ず以下を確認する。
