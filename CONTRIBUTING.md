@@ -14,7 +14,7 @@ Genai for Claude Code is a local-first harness that converts AI apps into Claude
 [ ] Clean-room policy not violated (see CLEANROOM.md)
 [ ] README or example is updated
 [ ] Eval skeleton or fixture added for new Skills
-[ ] `bash scripts/verify.sh` passes locally
+[ ] `npm run verify` passes locally (cross-platform: macOS / Linux / Windows)
 ```
 
 ## Adding a new example Skill
@@ -52,7 +52,7 @@ examples/<skill-id>/
 ## Running the verification
 
 ```bash
-bash scripts/verify.sh
+npm run verify
 ```
 
-This runs typecheck, lint, build, and a smoke compile of the example Skills. Failure means the change is not ready.
+This runs typecheck, lint, build, and a smoke compile of the example Skills. Works on macOS, Linux, and Windows. Failure means the change is not ready.

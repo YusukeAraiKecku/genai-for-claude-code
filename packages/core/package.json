@@ -16,7 +16,7 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "build": "tsc -p tsconfig.json",
-    "test": "node --test --experimental-strip-types 'src/**/*.test.ts' || echo '(no tests yet)'"
+    "test": "node --test --experimental-strip-types \"src/**/*.test.ts\""
   },
   "dependencies": {
     "ajv": "^8.17.1",

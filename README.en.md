@@ -204,8 +204,8 @@ Planned: `codebase-onboarding`, `local-rag-docs`, `remote-api-compat`
 Run an example:
 
 ```bash
-npx genai compile --recipe examples/proposal-review --out /tmp/test-skill
-npx genai validate /tmp/test-skill
+npx genai compile --recipe examples/proposal-review --out ./.genai-tmp/test-skill
+npx genai validate ./.genai-tmp/test-skill
 ```
 
 ---
@@ -272,7 +272,7 @@ Runnable versions will migrate to [v0.5 genai-marketplace](tasks/backlog.md) onc
 See [CONTRIBUTING.md](./CONTRIBUTING.md). Every PR must pass:
 
 - local-first principle check
-- `bash scripts/verify.sh` (typecheck + lint + build + smoke compile × 3)
+- `npm run verify` (typecheck + lint + build + smoke compile × 5; works on macOS / Linux / Windows)
 
 This project is a clean-room reimplementation that does not copy code, UI, or design assets from any external repository — see [CLEANROOM.md](./CLEANROOM.md) for the policy.
 

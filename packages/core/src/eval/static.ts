@@ -40,7 +40,7 @@ export function staticChecks(skillDir: string): EvalFinding[] {
           message: 'SKILL.md frontmatter missing description',
         });
       } else {
-        const descLine = fm.split('\n').find((l) => l.startsWith('description:'));
+        const descLine = fm.split(/\r?\n/).find((l) => l.startsWith('description:'));
         if (descLine && descLine.length < 30) {
           findings.push({
             layer: 'static',

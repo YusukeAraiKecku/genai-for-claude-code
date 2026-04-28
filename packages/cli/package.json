@@ -10,7 +10,7 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "build": "tsc -p tsconfig.json && chmod +x dist/index.js"
+    "build": "tsc -p tsconfig.json && node scripts/postbuild.mjs"
   },
   "dependencies": {
     "@genai/core": "0.1.0",

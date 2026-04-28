@@ -267,7 +267,7 @@ artifacts:      パストラバーサルチェック（..・/・~ 禁止）
 [CONTRIBUTING.md](./CONTRIBUTING.md) を参照。すべての PR は以下の通過が必須です。
 
 - ローカルファーストの原則確認
-- `bash scripts/verify.sh`（typecheck + lint + build + smoke compile × 3）
+- `npm run verify`（typecheck + lint + build + smoke compile × 5。macOS / Linux / Windows いずれでも動作）
 
 本プロジェクトは外部リポジトリのコード・UI・デザインをコピーせずクリーンルームで再実装しています。詳細は [CLEANROOM.md](./CLEANROOM.md) を参照。
 
