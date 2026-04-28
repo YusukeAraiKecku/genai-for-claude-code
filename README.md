@@ -5,7 +5,8 @@
 <h1 align="center">Genai for Claude Code</h1>
 
 <p align="center">
-  <strong>AIアプリを「呼び出す」のではなく、Claude Code に「習得」させる。</strong>
+  <strong>AIアプリを「呼び出す」のではなく、Claude Code に「習得」させる。</strong><br>
+  自治体・士業・中小企業向け local-first Claude Code Skill コンパイラ。汎用テンプレートと業界特化ケーススタディを同梱。
 </p>
 
 <p align="center">
@@ -239,6 +240,29 @@ artifacts:      パストラバーサルチェック（..・/・~ 禁止）
 | **v0.3** | 計画中 | Plugin marketplace packaging、`genai pack`、`genai publish` |
 | **v0.4** | 計画中 | Importer群: prompt / README / OpenAPI / workflow / script |
 | **v1.0** | 計画中 | Skill catalog、eval leaderboard、コミュニティテンプレート |
+
+---
+
+## 想定ユースケース
+
+**自治体職員**: 議会答弁ドラフト・例規改正差分（新旧対照表）・申請窓口問い合わせトリアージ・制度説明文書の Q&A 要約。法制執務の定型作業から条例改正のドラフト支援まで、Claude Code Skill として Genai で管理できます。
+
+**中小企業・士業**: ベンダー契約レビュー・勤怠表の月次レビュー・税務相談インテーク・提案書レビュー。ローカルでの文書処理と構造化アウトプット生成に local-first Skill が向いています。
+
+---
+
+## Case Studies
+
+業界特化の Skill レシピを `docs/case-studies/` に文書として収録しています。Recipe をコピーして `genai new` で自分のプロジェクトに組み込む想定です。
+
+| Case Study | ドメイン | モード | 説明 |
+|---|---|---|---|
+| [議会答弁ドラフター](./docs/case-studies/legislative-qa-drafter.md) | 自治体 | `local-rag` | 過去議事録 → 論点抽出 → 想定問答 → 答弁書骨子 |
+| [例規改正差分](./docs/case-studies/bylaw-amendment-diff.md) | 自治体 / 法務 | `local-file` | 現行条文 + 改正案 → 構造化新旧対照表（JSON artifact） |
+
+> **CLEANROOM**: ケーススタディのデータはすべて合成です。実在自治体名・実在条文・法制執務マニュアル文言は含みません。
+
+将来的に [v0.5 genai-marketplace](tasks/backlog.md) が立ち上がった時点で runnable 版はそちらに移植予定です。
 
 ---
 

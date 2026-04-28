@@ -6,7 +6,7 @@
 
 <p align="center">
   <strong>Turn AI apps into local-first Claude Code Skills.</strong><br>
-  AIアプリを「呼び出す」のではなく、Claude Code に「習得」させる。
+  local-first Claude Code Skill compiler for Japanese local government, SMB, and legal practice — with generic templates and domain case studies.
 </p>
 
 <p align="center">
@@ -245,6 +245,29 @@ See [CLEANROOM.md](./CLEANROOM.md).
 | **v0.3** | planned | Plugin marketplace packaging, `genai pack`, `genai publish` |
 | **v0.4** | planned | Importers: prompt / README / OpenAPI / workflow / source-script |
 | **v1.0** | planned | Skill catalog, eval leaderboard, community templates |
+
+---
+
+## Use Cases
+
+**Local government**: legislative Q&A drafting, bylaw amendment diff (before/after comparison tables), citizen inquiry triage, policy document Q&A summarization. Genai Skills streamline the rule-heavy document work that dominates local government operations — from legislative drafting support to council prep.
+
+**SMB / legal practice**: vendor contract review, monthly payroll review, tax advisory intake, proposal review. Local-first Skills are well-suited to document processing and structured output generation with sensitive information that should not leave the local environment.
+
+---
+
+## Case Studies
+
+Domain-specific Skill recipes are documented in `docs/case-studies/`. Copy the recipe into your own project with `genai new`.
+
+| Case Study | Domain | Mode | Description |
+|---|---|---|---|
+| [Legislative Q&A Drafter](./docs/case-studies/legislative-qa-drafter.md) | Local government | `local-rag` | Past minutes → topic extraction → Q&A draft → talking points |
+| [Bylaw Amendment Diff](./docs/case-studies/bylaw-amendment-diff.md) | Local government / legal | `local-file` | Current text + revised draft → structured comparison table (JSON artifact) |
+
+> **CLEANROOM**: All case study data is synthetic. No real jurisdiction names, ordinance text, or manual wording is included.
+
+Runnable versions will migrate to [v0.5 genai-marketplace](tasks/backlog.md) once it launches.
 
 ---
 

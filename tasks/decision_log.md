@@ -50,6 +50,18 @@
 **代替案**: 同一リポジトリ内の `marketplace/plugins/` に置く → シンプルだが、コミュニティ投稿が全て本リポジトリへの PR になり、review コストが集中する。
 **影響**: `genai-for-claude-code` 側は `genai-pack` / `genai-publish` / `genai install` コマンドのみ持ち、レジストリ本体は持たない。
 
+### D-010: 自治体ドメイン case-study は `examples/` に置かず `docs/case-studies/` に置く
+
+**決定**: `legislative-qa-drafter` / `bylaw-amendment-diff` の 2 件は `docs/case-studies/` 配下の文書として追加。`examples/` は既存 5 件（業界横断的な generic テンプレート）の構成を維持。GitHub Topics タグ 4 個（claude-code-skill / local-government / japan / karpathy-skills）を repo に設定。
+**理由**:
+- `examples/` はダウンロード後に「自分の用途向けにコピー → 改造する出発点」として使われる。日本の自治体・議会答弁に深く特化したものを並べると、ライブラリ全体のスコープ印象が「自治体専用」に偏り、他ドメインのユーザーが寄り付かなくなる。
+- ドメイン特化訴求（SEO）と generic template provision（UX）は分離する。前者は `docs/case-studies/` の markdown で行い、GitHub インデックスで検索流入を得る。後者は `examples/` で守る。
+- 将来 v0.5 で `genai-marketplace`（D-009、別 repo）が立ち上がったら、runnable 版はそちらに移植する。
+**CLEANROOM 防壁**: 全 fixture は合成テキスト。自治体名は「A 市」「B 町」placeholder。法制執務マニュアル実物の流用禁止。各 case-study 冒頭に CLEANROOM 注記。
+**代替案**:
+- `examples/` に追加 → スコープ印象偏重リスクで却下（本決定の主因）
+- 別 repo `genai-recipes-jp` を即時新設 → v0.5 marketplace と二重管理になり却下
+
 ### D-008: `cli/commands/new.ts` の scaffold コメント拡張は v0.2.x では行わない
 
 **決定**: v0.2.x で input 型を拡張するが、`packages/cli/src/commands/new.ts` 内のコード式 scaffold には拡張型の例を追加しない。新型の使い方ドキュメントは `docs/` 側で行う。

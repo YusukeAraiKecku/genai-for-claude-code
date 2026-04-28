@@ -21,6 +21,17 @@
   "bin": {
     "genai": "packages/cli/dist/index.js"
   },
+  "keywords": [
+    "claude-code",
+    "claude-code-skill",
+    "claude-skill",
+    "local-first",
+    "ai-app",
+    "compiler",
+    "local-government",
+    "japan",
+    "karpathy-skills"
+  ],
   "devDependencies": {
     "@biomejs/biome": "^1.9.0",
     "@types/node": "^22.0.0",
